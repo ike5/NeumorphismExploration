@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@theme {
+    --color-neumo: #e8ecef;
+    --color-neumo-bg: #e8e8e8;
+    --color-neumo-text: #8a9caa;
+}
+
+/* Override preflight resets at the base layer */
+@layer base {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--color-neumo-bg);
+    }
+}
+
+/* Place OUTSIDE @layer so these beat Tailwind's layers in specificity */
+.radiogroup {
+    padding: 48px 64px;
+    border-radius: 16px;
+    background: var(--color-neumo);
+    box-shadow: inset 4px 4px 6px 0px #d0d4d8,
+    inset -4px -4px 6px 0px #ffffff;
+}
+
+.wrapper {
+    margin: 16px 0;
+    position: relative;
+}
+
+.wrapper:first-child {
+    margin-top: 0;
+}
+
+.wrapper:last-child {
+    margin-bottom: 0;
+}
+
+.state {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0.00001;
+    pointer-events: none;
+}
+
+.label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--color-neumo-text);
+}
+
+.text {
+    margin-left: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    opacity: 0.8;
+    transition: opacity 0.2s linear, transform 0.2s ease-out;
+}
+
+.indicator {
+    position: relative;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    background: var(--color-neumo);
+    box-shadow: -6px -6px 12px 0px #ffffff,
+    6px 6px 12px 0px #c8cdd2;
+    overflow: hidden;
+}
+
+.indicator::before,
+.indicator::after {
+    content: "";
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    height: 80%;
+    width: 80%;
+    border-radius: 50%;
+}
+
+.indicator::before {
+    box-shadow: inset -3px -3px 6px 0px #ffffff,
+    inset 3px 3px 6px 0px #c8cdd2;
+}
+
+.indicator::after {
+    background: var(--color-neumo);
+    box-shadow: inset 3px 3px 6px 0px #c8cdd2,
+    inset -3px -3px 6px 0px #ffffff;
+    transform: scale3d(1, 1, 1);
+    transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+}
+
+.state:checked ~ .label .indicator::after {
+    transform: scale3d(0.975, 0.975, 1) translate3d(0, 10%, 0);
+    opacity: 0;
+}
+
+.state:focus ~ .label .text {
+    transform: translate3d(8px, 0, 0);
+    opacity: 1;
+}
+
+.label:hover .text {
+    opacity: 1;
+}
